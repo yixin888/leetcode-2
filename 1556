@@ -1,0 +1,48 @@
+1556. Thousand Separator
+Given an integer n, add a dot (".") as the thousands separator and return it in string format.
+
+ 
+
+Example 1:
+
+Input: n = 987
+Output: "987"
+Example 2:
+
+Input: n = 1234
+Output: "1.234"
+Example 3:
+
+Input: n = 123456789
+Output: "123.456.789"
+Example 4:
+
+Input: n = 0
+Output: "0"
+
+题目:
+把数字变成字符串，再在每三个数前面加“.” 变成千位
+
+思路：
+1.先把数字变成字符串
+2.从后面数，每三个数前面加点“.”
+3. range(遍历到哪里的范围， 从后面读，一个个往前递减)
+
+class Solution:
+    def thousandSeparator(self, n: int) -> str:
+        res = ""          设置输出答案为空
+        count = 0       计数从0 开始
+        n = str(n)        把数字变成字符串
+        
+        for i in range(len(n)-1, -1, -1):     (遍历到哪里的范围， 从后面读，一个个往前递减)
+            if count < 3:           计数小于3
+                res = n[i] + res      这里的顺序很重要，
+								                              不能用 res += n[i], 因为它是从后往前读
+								                              数字要一个个往前加，所以n [i] 放在res前面
+                count += 1          每遍历一个就加1
+            if count ==3 and i >= 1:        直到数到3 个数，并且 i 大于或者等于1
+                res = "." + res      在前面加 点
+                count = 0      计数重新归0
+        return res      返回最终答案
+
+
