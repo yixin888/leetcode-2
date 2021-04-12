@@ -1,0 +1,42 @@
+1539. Kth Missing Positive Number
+Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
+
+Find the kth positive integer that is missing from this array.
+
+ 
+
+Example 1:
+
+Input: arr = [2,3,4,7,11], k = 5
+Output: 9
+Explanation: The missing positive integers are [1,5,6,8,9,10,12,13,...]. The 5th missing positive integer is 9.
+Example 2:
+
+Input: arr = [1,2,3,4], k = 2
+Output: 6
+Explanation: The missing positive integers are [5,6,7,...]. The 2nd missing positive integer is 6.
+
+题目:
+1.数组是从1 开始递增
+2。找出第k个missing的数字
+
+思路：
+1.一般查找都是用二分法
+2.两个指针，指向开始和结尾
+3.missing # = arr【当前的数字】- （当前数字的序号 + 1）
+    例如 【2，3，4，7，11】找出7之前不见了多少个数
+		missing 的个数 = arr【3】- （3 + 1）=  7 - 4 = 3
+4. index = 当前总共多少个数字
+5. k = 不见了多少个数字
+6. result = low_index + k
+
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        low, high = 0, len(arr)          两个指针，开始和结尾
+        while low < high :              两个指针不交叉
+            mid = (low + high) //2        二分法， 找中间的位置
+            if arr[mid] - (mid + 1) < k :    如果中间的数字 - （序号 + 1）< 不见的个数
+                low = mid + 1        二分法后面的部分有k， 从中间数后面一个开始到最后
+            else:
+                high = mid       不然，在二分法前面部分
+        return low + k     返回 结果
