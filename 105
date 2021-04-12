@@ -1,0 +1,56 @@
+105. Construct Binary Tree from Preorder and Inorder Traversal
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+ 
+
+Example 1:
+
+
+Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+Output: [3,9,20,null,null,15,7]
+Example 2:
+
+Input: preorder = [-1], inorder = [-1]
+Output: [-1]
+
+题目:
+构造二叉树
+前序遍历和中序遍历
+
+思路：
+1.理解二叉树 三者区别
+        preorder 前序遍历： 第一个是根节点
+        inorder   中序遍历：最中间（偏后一个）是根节点，左边是左子树，右边是右子树
+				                                 左边的中间是 左节点，右边的中间是 右节点 
+				postorder  后序遍历
+
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder or not inorder:
+            return None
+        
+        rootValue = preorder[0]      根节点的值 = 前序遍历的第一个数
+        root = TreeNode(rootValue)      根节点 = TreeNode(rootValue)
+        inorderIndex = inorder.index(rootValue)     根据根节点的值
+				                                                                       在中序遍历中找到根节点的位置
+        
+        root.left = self.buildTree(preorder[1: inorderIndex +1], inorder[:inorderIndex])
+				不断地去划分  每一层左子树= 在前序遍历的  第一个数之后，
+				                                                   到中序遍历的根节点序号之前
+				                                                   
+																													 在中序遍历的根节点index序号之前的数。 
+															
+															注意：前序  和  中序  相差 1
+															这里 recall 题目给出的 self.buildTree() 方程 来划分左右两边的子树
+				
+        root.right = self.buildTree(preorder[inorderIndex +1 :], inorder[inorderIndex + 1 :])
+        不断地去划分   每一层右子树=在前序遍历的  根节点index之后  开始 到最后
+				                                                  
+				                                                   
+																													 在中序遍历的根节点index序号+1 之后的数。 
+															
+															注意：前序  和  中序  相差 1
+															这里 recall 题目给出的 self.buildTree() 方程 来划分左右两边的子树
+        return root      返回每一个值，从root第一个开始一个个地输出值
