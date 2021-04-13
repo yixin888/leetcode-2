@@ -1,0 +1,77 @@
+79. Word Search
+
+Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+ 
+
+Example 1:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+Output: true
+
+Example 2:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+Output: true
+Example 3:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+Output: false
+
+题目:
+在方块上找出相应的单词，
+如果存在输出true，不存在false
+
+思路：
+1.用DFS 深度寻找方法
+2.寻找起始点
+3.左右上下找 (x, y)轴
+   左：（x-1，y）
+	 右：（x+1，y）
+	 上：（x， y+1）
+	 下：（x， y-1）
+4.使用两个for loop找，
+    row 一行行找
+		column  一列列找
+5.重新定义一个新的DFS 方程叫helper
+	
+
+		
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        for i in range(len(board)):          一行行row地找
+            for j in range(len(board[0])):        一列列column地找，
+						                                  这里的是以第一行【0】有多少个字母就找到有多少个column
+                if self.helper(board, i , j, word, 0):      定义一个新的DFS方程，下面会有详细的
+                    return True       如果满足这个方程，输出True
+        return False       不满足条件，输出False
+    
+    def helper(self, board, i, j, word, wordIndex):   自己定义一个新的方程
+		                                （self，方块，i 代表x轴， j 代表y 轴， 单词， 单词的index序号）
+        if wordIndex == len(word):          如果单词的序号 == 单词的长度
+            return True      输出真
+        
+        if i <0 or i >= len(board) or j <0 or j >= len(board[0]) or word[wordIndex] != board[i][j]:          方块的起始点为（0，0），如果x轴i 超出边界或者 y 轴超出
+				                    或者找到了字母letter， 但是和word相对应的index不相等
+            return False         输出假
+        board[i][j] = "#"              已读了字母就标记“#”，以防再次重复一个字母
+        
+        found = self.helper(board, i+1, j , word, wordIndex + 1) \
+                or self.helper(board, i-1, j , word, wordIndex + 1)\
+                or self.helper(board, i, j+1 , word, wordIndex + 1)\
+                or self.helper(board, i, j-1 , word, wordIndex + 1)\
+        
+				以上的recall   DFS 方程 去一个个找，    区别在于 以x 和y 轴  
+				上下左右 +1 或者-1 地找，index 也+ 1 ，一个个找下去
+        
+				board[i][j] = word[wordIndex]    当前的字母的xy轴 = 单词value
+        
+        return found      输出找到或者找不到的结果
+        
+
+	 
