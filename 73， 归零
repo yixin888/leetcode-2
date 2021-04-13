@@ -1,0 +1,57 @@
+73. Set Matrix Zeroes
+Given an m x n matrix. If an element is 0, set its entire row and column to 0. Do it in-place.
+
+Follow up:
+
+A straight forward solution using O(mn) space is probably a bad idea.
+A simple improvement uses O(m + n) space, but still not the best solution.
+Could you devise a constant space solution?
+
+题目:
+1.将方块里面含有0 的行跟列里面的数字全部归0
+2.in - place 方式 = 将其修改
+3.不用另外一个空间记录
+
+思路：
+1.两个loop ， 一个读每一行，另一个loop 读每一列
+2.找到0后，先设置不用为0，将其标记下来
+3.过后再归0
+4.[i][j] 代表x轴和y轴 （x， y）
+
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        m,n = len(matrix), len(matrix[0])        设置row行数跟列数column，
+				                                                               第一row[0]有多少位数就有多少个column
+        zero_row, zero_col = False, False     先将标记的行跟列设置为不为0，false
+        
+        for i in range(m):          遍历每一行
+            for j in range(n):          遍历每一列
+                if matrix[i][j] == 0:       如果找到0
+                    matrix[i][0] = matrix[0][j]= 0     将其在的一整行x轴和一整列y轴先标记为0
+                    zero_row = True if i == 0 else zero_row     更新update True
+                    zero_col = True if j == 0 else zero_col      更新update True
+                    
+        for j in range(1,n):           从row行上看第1行和第n行
+            if matrix[0][j] == 0:        如果第1行里面的数字 ==0的话
+                for i in range(1,m):     将其数字相对应的从第一行到第m 行都变为0
+                    matrix[i][j] = 0      变为0，update
+                    
+        for i in range(1,m):        从column上看第1列到第n列
+            if matrix[i][0] == 0:      如果1列里面的数字 ==0的话
+                for j in range(1,n):     将其数字相对应的从第一列到第m 列都变为0
+                    matrix[i][j] = 0     变为0，update
+                    
+        if zero_row:      
+            for j in range(n):        将第0行的数字
+                matrix[0][j] = 0     全部变为0，update
+                
+        if zero_col:
+            for i in range(m):       将0列的数字
+                matrix[i][0] = 0     全部变为0，update
+                
+        return     返回
+
