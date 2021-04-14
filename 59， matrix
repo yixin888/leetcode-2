@@ -1,0 +1,77 @@
+59. Spiral Matrix II
+Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+
+ 
+
+Example 1:
+
+
+Input: n = 3
+Output: [[1,2,3],[8,9,4],[7,6,5]]
+Example 2:
+
+Input: n = 1
+Output: [[1]]
+
+题目:
+1.给出n，将它变成 n* n 的方块
+2.并且填上1 到 n* n的值
+3.填充方式是按照顺时针
+
+思路：
+分四次的方法填：
+1.从左到右
+2.从上到下
+3.从右到左 倒着填
+4.从下到上 倒着填
+5.（剩下中间一个的时候例外）
+
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        matrix = []           定义方块是空的
+        for i in range(n):     遍历题目给出的n，每一行row
+            matrix.append([0 for j in range(n)])     每一行row里面的n列column
+        
+        rowBegin = 0      从第0行开始 row
+        rowEnd = n-1     因为序号是从0开始，所以结尾是要减1
+        colBegin = 0       从第0 列开始  column
+        colEnd = n - 1     到最后一列
+        number = 1         从数字1开始填
+        
+        while rowBegin <= rowEnd and colBegin <= colEnd:     不交叉的情况下
+           
+					 for i in range(colBegin, colEnd +1):      填写第一行row的，从左到右
+						 填写row的时候用column是因为，每一行里的数都是一样的，因为它们在同一行
+                
+								matrix[rowBegin][i] = number     【开始的行数】【列数是每一个 i 值】= 数字
+                number += 1      填写的数字递增
+            rowBegin += 1    填完之后行数递增，到下一行
+            
+            for i in range(rowBegin, rowEnd + 1):    填写column的时候，从上到下
+						   因为是在同一个列数column，只有行数row不同，所以用row行数来遍历
+                
+								matrix[i][colEnd] = number【行数是根据 i 来改变的】【列是同一个列】= 数字
+                number += 1     填写的数字递增
+            colEnd -= 1    行数往前移一格
+            
+            if rowBegin <= rowEnd:    加个判断条件，
+						因为要是n= 2，只有两行时，就不需要进行下面的东西了，因为已经走完了
+                
+								for i in range(colEnd, colBegin-1, -1):   填最下面的row行的时候，
+								          从右往左，倒着填，同一个row，同一个行数不变，
+													不同的列数column，从最后面的column倒着往最前面的column填
+                    
+										matrix[rowEnd][i] = number
+										【同一个最后的row行】【遍历i 的column列数】= 填充数字
+                    number += 1     数字递增
+                rowEnd -= 1    填完最后一行往上移
+                
+            if colBegin <= colEnd:   判断条件同上，特殊情况，走完的话就不需要下面
+                for i in range(rowEnd, rowBegin-1, -1):    
+								从下往上，column不变，同一列，row变化
+                    matrix[i][colBegin] = number     【遍历的row数】【不变的column】=数字
+                    number += 1     数字递增
+                colBegin += 1    填完当前列数之后，列数往左移
+                
+        return matrix   返回方块
+        
