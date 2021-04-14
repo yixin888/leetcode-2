@@ -1,0 +1,62 @@
+54. Spiral Matrix
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+ 
+
+Example 1:
+
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+Example 2:
+
+
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+
+题目：
+1.给出方块
+2.顺时针填数字，从1开始递增
+
+思路：
+分4种方式填：
+1.第一行：  从左
+2.最后一列：  从上到下
+3.最后一行：  从右到左  反着填
+4.第一列：  从下到上
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        row = len(matrix)         定义行数
+        if row == 0 or len(matrix[0]) == 0:  如果没有行数，或者行数的长度=0，就是空的
+            return []         返回空集
+        col= len(matrix[0])   多少列数= 第一行有多少个数 就有多少列 竖着
+        
+        res = matrix[0]    先把第一行收集入答案
+        
+        if row > 1:     先判断， 超过第一行的情况下就做循环
+            
+						for i in range(1, row):     
+						从上到下，最后一列从序号为1 也就是第二个数开始，
+						同一列coloumn数相同，行数不同，所以i 在row里面遍历
+                
+								res.append(matrix[i][col - 1])   收集答案，row变，column数是在最后一列
+                
+            for j in range(col-2, -1,-1):    最后一行，从右到左往前倒着读，
+					（从倒数第二个开始， 到最左边第一个（包含第一个）所以要-1超过它 ， 倒着读
+              
+							res.append(matrix[row-1][j])  收集答案， row不变（最后一行），column变
+            
+            if col >1:           判断，列数大于1
+                for i in range(row-2, 0, -1):     第一列从下往上读
+		（倒数第二行row， 到第一行但不包括第一行已读，用0表示，这里不用-1，倒着读 ）
+								
+                    res.append(matrix[i][0])   收集答案，【row行数变】，【第一列不变】
+                    
+        m = []        设置一个空集 收集最中间一行的数字
+        for k in range(1, row-1):      第一行和最后一行都读了
+            t = matrix[k][1: -1]         剩下中间那一行
+            m.append(t)    收集中间那一行剩余的数
+            
+        return res + self.spiralOrder(m)   返回两个设置空集收集的答案
+
