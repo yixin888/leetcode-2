@@ -1,0 +1,46 @@
+56. Merge Intervals
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+ 
+
+Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: intervals = [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+题目 :
+1.将重合的区间合并
+2.没有重合的区间收集起来
+
+思路：
+1.先将区间排序，用区间的第一个数从大到小排序
+2.两个两个区间来对比
+3.前面一个区间的尾数（前后）    和    后面一个区间的前数字（后前） 对比
+    如果前面的尾数 >  后面的前数   ：   重合
+		不然 ： 收集起来
+4.注意： 这里不能用  start 代表 前数，【0】
+                或者不能用  end 代表尾数， 用【1】
+								最后一个区间  用 【-1】表示
+
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        ans = []       设置收集的答案为空
+        for interval in sorted(intervals, key= lambda x: x[0]):
+				先将区间排序，用区间的第一个数从大到小排序
+				 
+            if not ans or interval[0] > ans[-1][1]:   
+						如果没有区间或者 遍历的区间的第一个数 > ans 答案的尾数，即不重合
+               
+							 ans.append(interval)   收集区间
+            else:   不然，两个区间重合的话
+                ans[-1][1] = max(ans[-1][1], interval[1])    
+								收集的最后一个区间的尾数=比对的两个区间的尾数：较大的那一个
+								【前数不变， 尾数选较大的那个】
+        return ans   返回收集的答案
+		
