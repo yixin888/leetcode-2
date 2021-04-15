@@ -1,0 +1,61 @@
+33. Search in Rotated Sorted Array
+There is an integer array nums sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
+
+Given the array nums after the rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+ 
+
+Example 1:
+
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+Example 2:
+
+Input: nums = [4,5,6,7,0,1,2], target = 3
+Output: -1
+Example 3:
+
+Input: nums = [1], target = 0
+Output: -1
+
+guunaqi:
+1.一组升序的数组
+2.按照其中某一个数字旋转
+3.找出目标数字在旋转后的位置
+
+思路：
+1.旋转后取中间点
+2.如果中间点的 ，分两个部分，前面和后面
+3.  其中有一个部分是 有序， 一部分是无序
+4.  先看有序的部分
+      第一位数字 < 目标数字 < 尾数：  目标在此部分
+			不然的话，在另一无序部分
+5.要是不在有序部分，查看无序部分，
+6.在无序部分用同样的方法再次划分： 有序跟无序部分
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) -1         起始点和终点数
+        while left <= right:         如果是升序，证明有序
+            mid = (left + right) // 2       找出中间数
+            if nums[mid] == target:        如果目标=中间数
+                return mid            输出中间数
+            if target >= nums[0]:     如果目标> 第一个数字
+                if nums[mid] >= nums[0] and target > nums[mid]:   
+								如果中间数 > 第一个数字，证明是有序部分，并且 目标 > 中间数
+                    left = mid+1    目标在无序部分，无序部分在后半部分
+                else:     不然在有序部分
+                    right = mid -1       把范围锁在前半有序的部分
+            else:       
+                if nums[mid] >= nums[0] or target > nums[mid]:    
+								在目标<第一个数的情况下, 
+								中间数 > 第一个数，什么前半部分是升序，证明前半部分所有的数都大于目标
+								或者是目标 > 中间数，前半部分都是升序，说明在后半部分
+                    left = mid +1      目标在后半部分
+                else:      不然
+                    right = mid -1     目标在前半部分
+        return -1    以上条件都不存在，输出-1
+
+   
