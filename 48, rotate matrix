@@ -1,0 +1,49 @@
+48. Rotate Image
+ou are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+ 
+Example 1:
+
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [[7,4,1],[8,5,2],[9,6,3]]
+Example 2:
+
+
+Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+Example 3:
+
+Input: matrix = [[1]]
+Output: [[1]]
+Example 4:
+
+Input: matrix = [[1,2],[3,4]]
+Output: [[3,1],[4,2]]
+
+题目:
+将方块顺时针旋转90度
+
+思路：
+1.先上下把每一行row互换，一整行换一整行
+2.再画出对角线，一个一个元素互换
+    把每一个对应的数字互换，对角线上的数字保持不
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        l = 0      从第一行开始，一整行互换，只要x轴，不要y轴
+        r = len(matrix)- 1     设置最后一行
+        while l < r:      当上面一行的行数 < 下面一行的行数
+            matrix[l], matrix[r]=  matrix[r], matrix[l]    上下行互换，只要x轴，不要y轴
+            l += 1   最上一行互换完后，遍历下一行，往下移一行
+            r -= 1    最后一行互换完后，遍历上一行，往上移一行
+            
+        for i in range(len(matrix)):   对角线互换，只是单个元素一个个互换
+            for j in range(i):      两个for loop，因为x和y轴，第x行第y列代表一个元素
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]    对角线互换
+            
