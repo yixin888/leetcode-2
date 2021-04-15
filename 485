@@ -1,0 +1,38 @@
+485. Max Consecutive Ones
+Given a binary array nums, return the maximum number of consecutive 1's in the array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,0,1,1,1]
+Output: 3
+Explanation: The first two digits or the last three digits are consecutive 1s. The maximum number of consecutive 1s is 3.
+Example 2:
+
+Input: nums = [1,0,1,1,0,1]
+Output: 2
+
+题目:
+找出最多连续1 的数字
+
+思路：
+1.设置两个计数
+   一个计算1 的个数
+	 另一个遇到不是1 的个数，记录结果，并且把原来的计数归0，再计数
+	 
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        count = 0    计数： 连续1的数
+        res = 0     记录结果
+        
+        for i in nums:    
+            if i == 1:
+                count+= 1     连续1的数
+            else:   遇到不是1 的数
+                res = max(res, count)    更新搜索结果，找出最多的数
+                count = 0     再归0，重新计数
+                
+        return max(res, count )    特殊情况，看例子1，
+				如果0 之后的1计数count没有和前面结果res 对比，结果res没有更新
+				所以最后还是要选择 count计数 和 结果的 较大数
