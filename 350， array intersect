@@ -1,0 +1,45 @@
+350. Intersection of Two Arrays II
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Explanation: [9,4] is also accepted.
+
+题目:
+1.找出两个数组的交集
+2.暂不考虑顺序
+
+思路：
+1.用hash table 哈希表：
+    找出小的长度的数组，用它来做base和其他数组对比
+		相同的数字就记录下来，
+		并且把base数组里面相对应的数字归0，再对比下一个
+
+2.用两个指针的方法：
+   先排序，两个指针各指向一组
+	 相同的就记录下来，不同的就跳过，对比下一个
+
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if len(nums1) < len(nums2):      对比较短的长度的数组
+            return self.intersect(nums2, nums1)     排在intersect方程前面的是base对比数组
+                                                                          不然，就按照原来的排法
+        lookup = collections.defaultdict(int)    新建一个方程，哈希表hash table
+        for i in nums1:      首先遍历第一个数组，把里面的数字一一记录下来，
+            lookup[i] += 1      并且记录它们出现的次数
+            
+        result = []        设定输出的答案是空集
+        for i in nums2:        遍历第二个数组
+            if lookup[i] >0 :     如果第2 个数组里面的数字 和第一个数组已经记录的数字相同
+                result += i,    记录到答案里
+                lookup[i] -= 1       第一个数组的记录消除掉，检查下一位，免重复使用
+        return result     输出答案
+
