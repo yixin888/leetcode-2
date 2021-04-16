@@ -1,0 +1,46 @@
+349. Intersection of Two Arrays
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [9,4]
+Explanation: [4,9] is also accepted.
+
+题目:
+1.找出相交的array数字，不要重复数字，unique
+2.不在乎顺序
+
+思路：
+这里先用set方程去除多余重复的数字
+1.可以用hash table哈希表
+    找出较短的数组（短的省存储空间）做base，另外一组和它对比，
+		遍历较短的一组，把数字和出现的次数记录出来
+		再遍历长的数组，对比base，出现的就记录到答案里，base删除已经出现的数字
+		
+2.用two pointer的方法
+   先set去除重复的数字，排序，再对比，两个指针分别指向每一组
+	 如果相同，记录下来，不同，忽略掉，遍历下一位
+	 
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if len(nums1) > len(nums2):      较短的数组做base，节省存储空间，
+				                                                      如果数组1长，改排序，不然按照原来的排序
+            return self.intersection(nums2, nums1)     呼叫它给的方程，排在前面的2是base
+        
+        lookup = set()     建立一个loopup，将它set去除掉重复的数字
+        for i in nums1:     遍历较短的数组
+            lookup.add(i)    一个一个放进去lookup里面
+        
+        res = []       输出结果为空集
+        for i in nums2:     遍历数组2
+            if i in lookup:    如果和base的数字一样
+                res += i,      放进去答案的集合里面
+                lookup.discard(i)     原来的base数字已经被找到，删除，省得重复使用
+        return res     输出答案
