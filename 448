@@ -1,0 +1,28 @@
+Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
+
+ Example 1:
+
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [5,6]
+Example 2:
+
+Input: nums = [1,1]
+Output: [2]
+
+题目:
+1.给出一个list，里面含有1到n的数
+2.返回没有出现在1到n范围内的数字
+
+思路：
+1.list 有多少个数， 里面的数字就一个从1 排到那个数字
+2.list的长度= 个数
+3.python里面有一个set   function
+     set 里面的数字独一无二，并且不重复
+4.可以用set 的方程式去除多余重复的数字
+
+class Solution:
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        len_array = len(nums) + 1     找出长度，+1是因为下面rang function 是不包含最后                                                                      面的数字
+        a = set(i for i in range(1, len_array))    定义一个set，里面有1到n不重复的数字
+        b= set(nums)     将给出的list用set 的方程来去除多余的元素
+        return list(a-b)      将两者相减就可以得到多余的数字
