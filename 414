@@ -1,0 +1,42 @@
+414. Third Maximum Number
+Given integer array nums, return the third maximum number in this array. If the third maximum does not exist, return the maximum number.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,1]
+Output: 1
+Explanation: The third maximum is 1.
+Example 2:
+
+Input: nums = [1,2]
+Output: 2
+Explanation: The third maximum does not exist, so the maximum (2) is returned instead.
+Example 3:
+
+Input: nums = [2,2,3,1]
+Output: 1
+Explanation: Note that the third maximum here means the third maximum distinct number.
+Both numbers with value 2 are both considered as second maximum.
+
+题目:
+找出第3 大的数字
+
+思路：
+1.这里有个陷阱：第3大，倒数第3大
+    例如1，2，3 ： 第3大是1
+		      第1大是  ：3
+					第2大是  ：2
+					第3大是  ：1
+2.可以用python的 set方程去除掉多余的数字
+
+class Solution:
+    def thirdMax(self, nums: List[int]) -> int:
+        nums = sorted(list(set(nums)))    先用set去除掉重复的数字，再从小到大排序
+        
+        if len(nums) < 3:    如果弄好的nums list 长度 < 3，
+				这样子的话就没有第3大
+            return max(nums)   只能输出最大的数字，因为只有2个数
+        else:         长度> 3
+            return nums[-3]   输出倒数第3个数，也就是排好序的第3大
