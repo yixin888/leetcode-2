@@ -1,0 +1,5 @@
+1. python 里面有一个set 方程，可以将多余重复的数字除掉，可以看例子448
+    set 里面的数字独一无二，不重复
+    例如： a = set(i for i in range(1, len_array))
+        b= set(nums)
+        a-b = b里面缺少的数字
