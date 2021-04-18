@@ -1,0 +1,47 @@
+242. Valid Anagram
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+
+ 题目:
+对比两个单词是否是异位字母
+字母顺序不同，但字母相同
+
+思路：
+1.可以对比两者之间的字母出现的次数是否一样
+2.先建个dictionary
+   遍历第一个单词，把每个字母加进去，并且计算出现的次数
+	 再遍历第二个单词，如果出现字母跟之前记录的字母一样，消掉
+3.最后检查是不是dic 全部消掉变成0
+4.特殊情况： 单词长度不一样， 或者空集
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        dic = {}   建个字典dictionary
+        
+        for i in s:   遍历第一个单词s的每一个字母
+            if i not in dic:      如果字母不在dic里面
+                dic[i] = 1   把它加上去，并且记录为1个
+            else:    如果出现过
+                dic[i] += 1  次数加1
+        
+        for j in t:      遍历第二个单词 t 里面的每一个字母
+            if j not in dic:    如果不出现在之前记录的单词里面
+                return False    输出false
+            else:    不然
+                dic[j] -= 1    消掉1
+        
+        for k in dic:     最后看看字典里面的单词次数是不是全部消掉
+            if dic[k] != 0:      不是全部消掉=0的话
+                return False     输出false
+           
+        return True   不然就是满足条件
