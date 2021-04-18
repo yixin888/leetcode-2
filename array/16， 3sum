@@ -1,0 +1,45 @@
+16. 3Sum Closest
+Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,2,1,-4], target = 1
+Output: 2
+Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+ 
+题目:
+找出三数之和 最靠近目标数字
+
+思路：
+1.跟15题一样，可以参考它
+2.先排序
+3.有3个指针，左右指针跟遍历指针
+    遍历指针 i 从第一个开始
+		左边指针在遍历指针的下一个
+		右边指针从最后开始往前遍历
+
+class Solution:
+    def threeSumClosest(self, num: List[int], target: int) -> int:
+        num.sort()     先排序
+        res= num[0]+ num[1]+num[2]   先定义答案等于前面三个数之和，
+				                                                        之后遇到更好的再更新答案
+        
+        for i in range(len(num) - 2):  遍历指针，范围在从第一个最后第三个数，
+				                                                 因为后面还有两个指针
+            j, k = i+1, len(num) -1    定义左右指针
+            while j < k:     左右指针不交叉时
+                sum = num[i]+ num[j]+num[k]     三数之和
+                if sum == target:    三数之和 = 目标数字
+                    return sum    输出和
+                
+                if abs(sum- target) < abs(res - target):    
+								三数之和- 目标数字的绝对值 < 前面三个数加起来之和- 目标数字的绝对值
+                    res = sum   更新答案
+                
+                if sum < target:     如果三数之和 < 目标数字
+                    j +=1    左指针往后移，因为后面的数字更大，这样子和就变大，慢慢靠近
+                elif sum > target:    如果三数之和  > 目标数字
+                    k -=1    右指针往前移，因为前面的数字更小，这样子和就变小，慢慢靠近
+        return res   输出更新的答案
