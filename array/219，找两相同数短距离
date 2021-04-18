@@ -1,0 +1,44 @@
+219. Contains Duplicate II
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1
+Output: true
+Example 3:
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+
+题目:
+1.找出两个相同的数，
+2.看看它们之间的距离是否小于或者等于k
+
+思路：
+enumerate(sequence, [start=0])的用法
+
+1.建dictionary，因为它是成对成对地出现
+2.存数，存数字对应的index
+3.只要找出两个相同的数之间index的最短距离小于k就行啦
+4.两者距离，如果距离大于k，重新更新数字的起点，量第三个相同的数
+
+
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        dic = {}    建字典
+        
+        for i, num in enumerate(nums):  数字相应的起始点
+            if num not in dic:    数字如果不在新建的字典
+                dic[num] = i    添加
+            else:    已有
+                if i - dic[num] <= k:    用目前的位置- 起始点，当它的结果< = k是
+                    return True    返回真
+                dic[num]= i    不然，它的答案> k，则重新更新相同数字的位置，
+								                      算第三个相同的数
+        return False    不满足以上条件，输出假
