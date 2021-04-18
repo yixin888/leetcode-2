@@ -1,0 +1,37 @@
+189. Rotate Array
+Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4,5,6,7], k = 3
+Output: [5,6,7,1,2,3,4]
+Explanation:
+rotate 1 steps to the right: [7,1,2,3,4,5,6]
+rotate 2 steps to the right: [6,7,1,2,3,4,5]
+rotate 3 steps to the right: [5,6,7,1,2,3,4]
+Example 2:
+
+Input: nums = [-1,-100,3,99], k = 2
+Output: [3,99,-1,-100]
+Explanation: 
+rotate 1 steps to the right: [99,-1,-100,3]
+rotate 2 steps to the right: [3,99,-1,-100]
+
+题目:
+list 的数字向后移动k位
+
+思路：
+1.要是k > list 的长度，我们用它的余数
+2.观察得出，后面的k个数字，往最前面加就行了
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)   用余数求
+        nums[:k], nums[k:] = nums[len(nums)-k:], nums[: len(nums)-k]
+				前面，后面 = 后面的k 个数字， 前面到后面的分界线
