@@ -1,0 +1,68 @@
+15. 3Sum
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Example 2:
+
+Input: nums = []
+Output: []
+Example 3:
+
+Input: nums = [0]
+Output: []
+
+e:
+1.找出三个数，将他们加起来和=0
+2.这3个数必须不相等
+
+思路：
+1.先排序，从小到大排，不然大小乱了，增加工作时间
+2.因为它有多个可能的值，所以建立一个空集来收集
+3.特殊情况是：
+    如果前面加起来都> 0，后面的全部不考虑，因为它已经从小到大排好序
+4.3个指针，它是two sum 类似进阶版，可以用类似方法解决	
+
+     一个指针是从最小到大，第一个遍历  【i】
+		 第二个指针是在第1 个指针的右边的下一个，
+		 跟着它往下走，但在最左 【L】= 【i】 + 1
+		 第3个指针是最右边，往前移 【R】
+		 
+
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)   设置遍历的个数
+        res = []      设置输出结果为空集
+        if(not nums or n<3):    如果不超过3个数，
+            return[]      返回空集
+        nums.sort()     排序，从小到大排
+        res =[]     设置输出答案为空集
+        for i in range(n):   第一个指针 i 遍历
+            if(nums[i] > 0):   特殊情况，因为已经排好序，i 如果大于0，后面的都是大的整数
+                return res       后面没有意义，因为怎么加都是大于0
+            if (i> 0 and nums[i]== nums[i-1]):   如果i的位置大于0，也就是第一位后面开始
+						                                           如果第一位和它后面一位的数字相同，题目要不同的数
+                continue    跳过，遍历下一个
+            L = i+1   左边的指针，也就是第二个指针，在i后面的下一位，但在整个list最左边
+            R = n-1    右指针，在整个list最右边，最后面开始往前遍历
+            while(L <R):    当左边的指针< 右边的指针，也就是不交叉
+                if(nums[i]+nums[L]+nums[R]==0):   当3个数加起来=0
+                    res.append([nums[i],nums[L],nums[R]])   加入这3个数的集合进去答案里面
+                    while(L <R and nums[L]== nums[L+1]):   如果左边的指针 = 它的下一个
+                        L =L+1    跳过，往右移，
+                    while(L < R and nums[R]== nums[R-1]):   右边的指针和它前面的数一样
+                        R = R-1  跳过，往前移
+                    L = L+1    每次做完要更新一下左指针
+                    R= R - 1    每次做完要更新一下右指针
+                elif(nums[i]+nums[L]+nums[R] > 0):   如果三个数加起来> 0
+                    R = R-1   右指针往前移，因为它太大了，变小一点
+                else:    如果三个数加起来< 0
+                    L = L +1   左指针往后移，因为它太小了，变大一点
+        return res    输出答案
