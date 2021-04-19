@@ -1,0 +1,44 @@
+162. Find Peak Element
+
+A peak element is an element that is strictly greater than its neighbors.
+
+Given an integer array nums, find a peak element, and return its index. If the array contains multiple peaks, return the index to any of the peaks.
+
+You may imagine that nums[-1] = nums[n] = -∞.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,1]
+Output: 2
+Explanation: 3 is a peak element and your function should return the index number 2.
+Example 2:
+
+Input: nums = [1,2,1,3,5,6,4]
+Output: 5
+Explanation: Your function can return either index number 1 where the peak element is 2, or index number 5 where the peak element is 6.
+
+题目:
+找出高峰值
+
+思路：
+有两种解法
+1. 找出 x 当它前面和后面都小于它，
+    但最后注意有特殊情况，例如只有一个数
+2. 用binary sarch，前后往中间找，取中间值，省一大半时间跟数据
+
+
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        left, right = 0, len(nums)-1    左右指针，最前面和最后面
+        
+        while left< right:     当左边 < 右边时，不交叉时
+            mid = (right + left) // 2       取中间值，分开前后两半部分
+            if nums[mid] < nums[mid+1]:   如果中间值 < 它的后面
+                left = mid + 1   找后一半部分
+            else:      不然
+                right = mid    找前一半部分
+        return left   
+
+
