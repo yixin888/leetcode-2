@@ -1,0 +1,46 @@
+873. Length of Longest Fibonacci Subsequence 百度考过
+A sequence X1, X2, ..., Xn is Fibonacci-like if:
+
+n >= 3
+Xi + Xi+1 = Xi+2 for all i + 2 <= n
+Given a strictly increasing array arr of positive integers forming a sequence, return the length of the longest Fibonacci-like subsequence of arr. If one does not exist, return 0.
+
+A subsequence is derived from another sequence arr by deleting any number of elements (including none) from arr, without changing the order of the remaining elements. For example, [3, 5, 8] is a subsequence of [3, 4, 5, 6, 7, 8].
+
+ 
+
+Example 1:
+
+Input: arr = [1,2,3,4,5,6,7,8]
+Output: 5
+Explanation: The longest subsequence that is fibonacci-like: [1,2,3,5,8].
+Example 2:
+
+Input: arr = [1,3,7,11,12,14,18]
+Output: 3
+Explanation: The longest subsequence that is fibonacci-like: [1,11,12], [3,11,14] or [7,11,18].
+
+题目:
+给出一组数字，找出最长的能成一系列数字的规律
+规律是： 前两个数字=第3个数字
+
+思路：
+1.找出任意两个数字就可以决定第3个数字甚至后面的数字
+2.所以要用两个for循环，第一个数遍历到后面的倒数第2个数
+3.第二个数遍历到最后面的数
+
+class Solution:
+    def lenLongestFibSubseq(self,A ):
+        s = set(A)    先去除重复的数字
+        n = len(A)    长度
+        res = 0        设置输出的结果=0
+        
+        for i in range(n-1):     第一个数遍历到倒数第2个
+            for j in range(i+1, n):   第2个数遍历到最后面
+                a, b = A[i], A[j]   定义两个数
+                count = 2   已经有两个
+                while a+b in s:   当两个数的和 在s里面存在，那么他就是第三个数
+                    a,b = b, a+b   两个两个遍历下去，找第四，5，6，以后的数
+                    count += 1     计数累计了多少个数
+                    res = max(res, count)   输出最大个数的集合
+        return res if res > 2 else 0    返回答案，如果集合长度不成功两个数，返回0
