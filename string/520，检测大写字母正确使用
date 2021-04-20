@@ -30,3 +30,12 @@ Output: False
 class Solution:
     def detectCapitalUse(self, word: str) -> bool:
         return word.islower() or word.isupper() or (word[0].isupper() and word[1:].islower())
+        
+思路：
+两种解法
+1.直接一行代码straight forward
+2.第2种是，一个个读字母，
+   如果大写字母有0个，return true
+	 如果大写字母 个数= 单词的长度， return true
+   如果大写字母 个数=1，并且它在第一个位置，return true
+3.剩余的情况全部return false
