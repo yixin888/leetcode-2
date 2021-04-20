@@ -1,0 +1,37 @@
+49. Group Anagrams
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Example 2:
+
+Input: strs = [""]
+Output: [[""]]
+Example 3:
+
+Input: strs = ["a"]
+Output: [["a"]]
+
+题目:
+1.同分异构题，同一个字母组成不同的单词，
+2.将他们分配在一起
+
+思路：
+有两种解法
+1. 先记录原来的单词和键值，将他们排序，相同的放在一起，返回原来对应的键值
+2. 将他们出现的字母次数，相同的字母次数放在一起
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        mp = collections.defaultdict(list)    记录原来的单词
+        
+        for st in strs:    遍历
+            key = "".join(sorted(st))   键值，将排好序，
+            mp[key].append(st)    一样的单词放在一起
+        return list(mp.values())    返回原来单词位置对应的键值
