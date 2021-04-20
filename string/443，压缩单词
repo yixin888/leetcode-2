@@ -1,0 +1,58 @@
+443. String Compression
+Given an array of characters chars, compress it using the following algorithm:
+
+Begin with an empty string s. For each group of consecutive repeating characters in chars:
+
+If the group's length is 1, append the character to s.
+Otherwise, append the character followed by the group's length.
+The compressed string s should not be returned separately, 
+but instead be stored in the input character array chars. 
+Note that group lengths that are 10 or longer will be split into multiple characters in chars.
+
+After you are done modifying the input array, return the new length of the array.
+
+ 
+Follow up:
+Could you solve it using only O(1) extra space?
+
+ 
+
+Example 1:
+
+Input: chars = ["a","a","b","b","c","c","c"]
+Output: Return 6, and the first 6 characters of the input array should be: ["a","2","b","2","c","3"]
+Explanation: The groups are "aa", "bb", and "ccc". This compresses to "a2b2c3".
+Example 2:
+
+Input: chars = ["a"]
+Output: Return 1, and the first character of the input array should be: ["a"]
+Explanation: The only group is "a", which remains uncompressed since it's a single character.
+
+题目 :
+1.压缩单词
+2.如果字母只出现一次，后面不跟数字
+3.follow up： 不用多余的space
+
+思路：
+1.两个指针，
+2.第一个指针，留在第一个数，当后面的第二和第三个数不相等时，它才移位
+3.第2个指针，从第二个数开始遍历到最后
+
+class Solution:
+    def compress(self, chars: List[str]) -> int:
+        n = len(chars)    长度
+        i, count = 0, 1    定义第一个指针，计数
+        
+        for j in range(1, n+1):   第2个指针遍历，从第2个位置到最后一个位置，
+				                                        +1是因为从0开始数
+            if j < n and chars[j] == chars[j-1]:   第2 和第3个数相等
+                count += 1   计数加1
+            else:   不相等
+                chars[i] =chars[j-1]  把第1个指针重新调位置到新的位置，
+                i += 1       调到第2个位置
+                if count >1 :    如果计数> 1,后面才跟数字，等于1，后面不跟数字，可忽略
+                    for m in str(count):    把数字变成字符串
+                        chars[i] = m       一个个拆开
+                        i += 1     一个个遍历下去
+                count = 1       跳出if语句，出现设定计数，出现计数
+        return i    返回遍历的i
