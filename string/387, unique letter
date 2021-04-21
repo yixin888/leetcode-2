@@ -1,0 +1,39 @@
+387. First Unique Character in a String
+Given a string s, return the first non-repeating character in it and return its index. If it does not exist, return -1.
+
+ 
+
+Example 1:
+
+Input: s = "leetcode"
+Output: 0
+Example 2:
+
+Input: s = "loveleetcode"
+Output: 2
+Example 3:
+
+Input: s = "aabb"
+Output: -1
+
+题目:
+找出不重复的字母，返回它的index
+如果没有unique 字母，则返回-1
+
+思路：
+1.python 自带 字母 数数字的功能 ： 
+         from collections import Counter
+2.它已经帮你数好了字母的次数
+
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        from collections import Counter   数字母次数的功能
+        dic = Counter(s)  建立一个字典，里面成对出现， 字母：数字
+        
+        for i, c in enumerate(s):    这里i 代表index， c 代表字母
+            if dic[c] ==1 :    之前建立的字典已经有了所有数据，
+						                            所以每个字母都存在次数，要么=1,要么 > 1
+						
+                return i       返回它的index
+            
+        return -1   要是没有unique字母，返回-1
