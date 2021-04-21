@@ -1,0 +1,58 @@
+6. ZigZag Conversion
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string s, int numRows);
+ 
+
+Example 1:
+
+Input: s = "PAYPALISHIRING", numRows = 3
+Output: "PAHNAPLSIIGYIR"
+Example 2:
+
+Input: s = "PAYPALISHIRING", numRows = 4
+Output: "PINALSIGYAHRPI"
+Explanation:
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+
+题目:
+1.给出的row行数，
+2.把字母用“z”的形式
+3.按照row行数的大小写出来
+
+思路：
+1.先从上往下 ： row + 1 直到它到达给出的row行数，然后返回从下往上
+2.再从下往上：  Row - 1 直到它= 0， 然后再从上往下走
+3.有特殊情况是： 当给出的 row行数> 字母的字数，则不用管，直接输出字母
+
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows ==1 or numRows >= len(s):       特殊情况，
+				当给出的 row行数=1 或者 row > 字母的字数，则不用管，
+            return s   直接输出字母
+        
+        zigzag = ['' for x in range(numRows)]   建立一个空集
+        
+        row, step = 0, 1   从序号0也就是第一行遍历， 步数step = 走一步
+        
+        for i in s:    遍历字母
+            zigzag[row] += i   按照遍历把字母加入每一行row，每一行row字母不一样
+            
+            if row == 0:      如果走到第一行，
+                step = 1   则向下走， row 1 - row0 = 1
+            elif row == numRows -1:   当走到最下面的一行，-1 因为序号从0开始
+                step = -1    往上走，下面一行  -  上面一行  = -1
+            
+            row += step   每一行都走一步，要么往上走（-1），要么往下走 （+1）
+            
+        return ''.join(zigzag)   输出最终收集的答案
