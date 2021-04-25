@@ -1,0 +1,57 @@
+197. Rising Temperature
+Table: Weather
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| recordDate    | date    |
+| temperature   | int     |
++---------------+---------+
+id is the primary key for this table.
+This table contains information about the temperature in a certain day.
+ 
+
+Write an SQL query to find all dates' id with higher temperature compared to its previous dates (yesterday).
+
+Return the result table in any order.
+
+The query result format is in the following example:
+
+Weather
++----+------------+-------------+
+| id | recordDate | Temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+
+Result table:
++----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+In 2015-01-02, temperature was higher than the previous day (10 -> 25).
+In 2015-01-04, temperature was higher than the previous day (20 -> 30).
+
+
+题目:
+1.找出当天温度比前天高
+2.日期 > 1 比前天日期
+
+思路：
+1.DateDiff(day1, day2) = 1, 是内置方程，求两个日期中间相隔几天
+2.Inner Join ， 是找出交叉的点，不是普通join 的keep保持某一点
+
+
+
+# Write your MySQL query statement below
+SELECT tb1.Id
+FROM Weather as tb1
+INNER JOIN Weather as tb2
+ON tb1.Temperature > tb2.Temperature AND DATEDIFF(tb1.RecordDate, tb2.RecordDate) = 1
+WHERE tb1.RecordDate > tb2.RecordDate;
