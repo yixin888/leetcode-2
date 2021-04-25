@@ -11,3 +11,7 @@
     DELETE
 		FROM
 
+
+1.case when是内置方程，像 if-else
+2.count(* ) 是内置方程，计数多少行
+3.Round(...  ,  2) 是计算，保留两位数
