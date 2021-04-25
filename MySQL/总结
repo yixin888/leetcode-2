@@ -1,0 +1,2 @@
+1.DateDiff(day1, day2) = 1, 是内置方程，求两个日期中间相隔几天
+2.Inner Join ， 是找出交叉的点，不是普通join 的keep保持某一点
