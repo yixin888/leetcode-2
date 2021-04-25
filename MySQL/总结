@@ -15,3 +15,13 @@
 1.case when是内置方程，像 if-else
 2.count(* ) 是内置方程，计数多少行
 3.Round(...  ,  2) 是计算，保留两位数
+
+
+判断语句有两种
+1.where
+2.having
+
+
+SQL 语法：
+
+FROM   ->  ON   ->  JOIN  -> WHERE  -> GROUP BY -> WITH -> HAVING -> SELECT  -> DISTINCT  ->  ORDER BY
