@@ -25,3 +25,11 @@
 SQL 语法：
 
 FROM   ->  ON   ->  JOIN  -> WHERE  -> GROUP BY -> WITH -> HAVING -> SELECT  -> DISTINCT  ->  ORDER BY
+
+
+
+1. mod(id, 2)=1
+     意思是   id % 2的余数= 1
+2. select  *
+    代表只有一个table
+    *代表所有的意思
