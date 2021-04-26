@@ -33,3 +33,12 @@ FROM   ->  ON   ->  JOIN  -> WHERE  -> GROUP BY -> WITH -> HAVING -> SELECT  -> 
 2. select  *
     代表只有一个table
     *代表所有的意思
+    
+    
+3.update format：
+                   update 
+                   set
+4. if 语句：
+           IF(sex = " f", "m", "f") 
+					 意思是，如果sex = f 的时候， 把它改成m ， 
+					                 不然就是sex= m，把它改成f
