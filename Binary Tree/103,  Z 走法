@@ -1,0 +1,60 @@
+103. Binary Tree Zigzag Level Order Traversal
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values.
+(i.e., from left to right, then right to left for the next level and alternate between).
+
+ 
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+Example 2:
+
+Input: root = [1]
+Output: [[1]]
+Example 3:
+
+Input: root = []
+Output: []
+
+ 题目:
+1.tree node 
+  按照“z”的方式，从上往下走
+2.第一行（序号0），从左往右
+3.第二行（序号1），从右往左
+4.第3 行（序号2），从左往右
+5.第4 行（序号3），从右为左
+
+思路：
+1. BFS， 广度搜索
+2. 序号为奇数行，从右往左
+3. 序号为偶数行，从左往右
+
+class Solution:
+    def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        q, res = [(root, 1)], []      
+		（走过的node节点=q ， level那一层从第一层开始）， res = 答案收集
+        if not root:     没有root 可走
+            return res     输答案
+        
+        while q != []:        当它不等于空集时
+            node, level = q.pop(0)         走到的节点pop弹出来
+            if node.left != None:     如果有左节点
+                q.append((node.left, level +1))   加上，并且level 到下一行
+            if node.right != None:    如果有右节点
+                q.append((node.right, level +1))  加上，并且level 到下一行
+                
+            if level == len(res):          如果层次level = 收集答案的层次
+                res[level -1].append(node.val)    减1 是因为它序号从0 开始，
+								                                      把level相对应的数字加进去答案相对应的层次里面
+            else:    如果层次level   不等于   收集答案的层次，意思是新的level开始
+                res.append([node.val])    把level相对应的数字加进去答案
+								                                           下一个相对应的层次里面
+                
+        for i in range(len(res)):   如果收集答案的层次序号是奇数行
+                if i % 2 == 1:       奇数行
+                    res[i] = res[i][::-1]    反过来写
+                    
+        return res   返回收集的答案
+
