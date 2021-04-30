@@ -1,0 +1,36 @@
+24. Swap Nodes in Pairs
+Given a linked list, swap every two adjacent nodes and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4]
+Output: [2,1,4,3]
+Example 2:
+
+Input: head = []
+Output: []
+Example 3:
+
+Input: head = [1]
+Output: [1]
+
+ 题目 :
+1.成对互换
+
+思路：
+创造一个node叫pre，排在head 的前面
+然后进行互换
+
+class Solution:
+    def swapPairs(self, head: ListNode) -> ListNode:
+        pre, pre.next = self, head            创造一个node叫pre ，排在head前面
+        while pre.next and pre.next.next:   当pre后面有两个node的时候
+            a = pre.next     设置a
+            b = a.next         设置b
+            pre.next, b.next, a.next = b, a, b.next    开始互换，
+						                       pre永远在互换完的两个node前面，
+            pre = a        也就是第2个node，b换完变成a，它同时也是pre
+        return self.next    输出，从头输出
