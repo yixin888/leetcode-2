@@ -1,0 +1,45 @@
+82. Remove Duplicates from Sorted List II
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+Example 2:
+
+
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+
+题目:
+1.给出已经排好序的linklist
+2.删除掉重复的node
+
+思路：
+1.创建一个dummy node，放在最前面（序号为-1）
+2.如果遇到cur == cur.next,则跳到下一个，直到不重复，记录并输出
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if head == None or head.next == None:   如果是空的linklist
+            return head    返回
+        
+        dummy_node = ListNode(-1)   创建一个dummy node，放在最前面（序号为-1）
+        dummy_node.next = head   空的node下一个就是head
+        prev = dummy_node          空的node设置为pre
+        cur = head           原先linklist 的头head 设置为cur
+        while cur != None and cur.next != None:   当不为空时，或者下一个不为空时
+            if cur.val == cur.next.val:      如果当前node的值== 下一个node的值
+                val = cur.val       将值提取出来
+                while cur != None and val == cur.val:  当前值不为空，
+								                                                      并且提取的值==当前值时
+                    cur = cur.next    当前node= 下一个node，3个数都相同，往后瞬移
+                prev.next = cur      之前相同的都删掉，把pre放在不相同的node上
+            else:         当前位置与后面的值不相等时
+                cur = cur.next    之后再重复同样的操作，比较下一个是否相同
+                prev = prev.next   更新pre的位置
+                    
+        return dummy_node.next   返回从头开始到后面的值
