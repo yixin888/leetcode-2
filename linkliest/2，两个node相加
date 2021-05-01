@@ -1,0 +1,51 @@
+2. Add Two Numbers
+You are given two non-empty linked lists representing two non-negative integers. 
+The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+ 
+
+Example 1:
+
+
+Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+Example 2:
+
+Input: l1 = [0], l2 = [0]
+Output: [0]
+Example 3:
+
+Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+
+题目 :
+1.将两个linklist相加
+2.342  -> 243 确实是reverse来记下
+3.第一个数是个数，第二个数是十位
+
+思路：
+1.一般做linklist需要 dummy 和 cur 两个node
+2.dummy （head的前一个node或者headnode，来保存结果）
+3.cur 代表headnode
+4.carry 代表进位，例如 4+6 = 10， 进位是1
+
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        res = ListNode(0)   这里的res相当于dummy node，用来记录保存结果
+        cur = res    
+        carry= 0      这里的carry相当于进位，例如 4+6 = 10， 进位是1
+        while l1 or l2 or carry:    如果存在任意一个
+            val1 = (l1.val if l1 else 0)    如果存在val1 ，它就= val1.不然就是0
+            val2 = (l2.val if l2 else 0)    如果存在val2 ，它就= val2.不然就是0
+            s= val1 + val2 + carry    两数相加，并且+ 进位carry
+            carry = s//10          进位取整数
+            cur.next = ListNode(s%10)    三数之和除以10取余数
+            cur = cur.next   遍历到下一个，以此类推
+            
+            l1 = (l1.next if l1 else None)   如果存在val1 ，它就= val1.不然就是0
+            l2 = (l2.next if l2 else None)   如果存在val2 ，它就= val2.不然就是0
+            
+        return res.next   返回答案
