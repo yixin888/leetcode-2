@@ -1,0 +1,4 @@
+1.一般做linklist需要 dummy 和 cur 两个node
+2.dummy （head的前一个node或者headnode，来保存结果）
+3.cur 代表headnode
+4.carry 代表进位，例如 4+6 = 10， 进位是1
