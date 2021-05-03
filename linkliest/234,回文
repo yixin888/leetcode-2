@@ -1,0 +1,32 @@
+234. Palindrome Linked List
+Given the head of a singly linked list, return true if it is a palindrome.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,2,1]
+Output: true
+Example 2:
+
+
+Input: head = [1,2]
+Output: false
+
+
+题目:
+检查是否是回文
+
+
+思路：
+1.反过来写=正着写
+2.或者中间切开，把后面部分reverse，看看是否=前面部分
+
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        res= []         新建一个集
+        while head:      当还有下一个node的时候，head放到下一个node
+            res.append(head.val)    加入node到新建的集
+            head = head.next     到下一个
+        return res == res[::-1]   看看反过来是不是= 正着写
