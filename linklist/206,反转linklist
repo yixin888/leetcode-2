@@ -1,0 +1,43 @@
+206. Reverse Linked List
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+Example 2:
+
+
+Input: head = [1,2]
+Output: [2,1]
+Example 3:
+
+Input: head = []
+Output: []
+
+题目:
+反转linklist，非常经典的题目
+
+思路：
+有两种方法
+1.迭代
+2.递归
+
+需要3个指针，
+pre 放在linklist前面，为空
+cur 放在head，记录下来
+head  和cur一起，
+
+迭代解法：
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        pre = None       第一个指针在最前面，为空
+        while head:        当还有下一个node的时候
+            cur = head     三个指针互相反转
+            head = cur.next
+            cur.next = pre
+            pre = cur
+        return pre
